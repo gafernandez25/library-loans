@@ -159,7 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        mrgswift\EncryptEnv\Provider\EncryptEnvServiceProvider::class,
         /*
          * Application Service Providers...
          */
