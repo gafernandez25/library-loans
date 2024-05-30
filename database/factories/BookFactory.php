@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Book;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<User>
+ * @extends Factory<Book>
  */
-class UserFactory extends Factory
+class BookFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,9 +20,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'surname' => fake()->lastName(),
-            'email' => fake()->unique()->safeEmail(),
+            'title' => fake()->title,
+            'isbn' => fake()->isbn13(),
         ];
     }
 }
