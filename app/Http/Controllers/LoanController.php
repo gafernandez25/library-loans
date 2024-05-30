@@ -17,13 +17,17 @@ class LoanController extends Controller
     {
         $users = $this->loanRepository->getUserLoans();
 
-        return response()->json($users);
+        return response()->json([
+            'loans' => $users
+        ]);
     }
 
     public function listBooks(): JsonResponse
     {
         $books = $this->loanRepository->getBookLoans();
 
-        return response()->json($books);
+        return response()->json([
+            'loans' => $books
+        ]);
     }
 }

@@ -18,7 +18,7 @@ class EloquentLoanRepository implements LoanRepositoryInterface
             ->select('users.id', 'users.name', 'users.surname', 'users.email')
             ->with([
                 'books' => function (BelongsToMany $query) {
-                    $query->select('title', 'isbn')->withPivot('created_at');
+                    $query->select('id', 'title', 'isbn')->withPivot('created_at');
                 },
             ])
             ->get();
@@ -30,7 +30,7 @@ class EloquentLoanRepository implements LoanRepositoryInterface
             ->select('books.id', 'books.title', 'books.isbn')
             ->with([
                 'users' => function (BelongsToMany $query) {
-                    $query->select('name', 'surname', 'email')->withPivot('created_at');
+                    $query->select('id', 'name', 'surname', 'email')->withPivot('created_at');
                 },
             ])
             ->get();
