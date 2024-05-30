@@ -33,6 +33,8 @@ class Book extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->as('loans')->withTimestamps();
+        return $this->belongsToMany(User::class)
+            ->as('loans')
+            ->withPivot(['created_at']);
     }
 }

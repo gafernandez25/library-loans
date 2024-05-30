@@ -38,6 +38,8 @@ class User extends Model
 
     public function books(): BelongsToMany
     {
-        return $this->belongsToMany(Book::class)->as('loans')->withTimestamps();
+        return $this->belongsToMany(Book::class)
+            ->as('loans')
+            ;
     }
 }
