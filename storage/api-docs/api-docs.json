@@ -1,0 +1,379 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Library loans API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/book": {
+            "get": {
+                "tags": [
+                    "Books"
+                ],
+                "summary": "Returns a list of books. Search options available.",
+                "operationId": "5e3ce406b5942b3bca1057592dbcee26",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "Search fields",
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Mastering Laravel"
+                                    },
+                                    "isbn": {
+                                        "description": "13 digits",
+                                        "type": "string",
+                                        "example": "978-3-16-148410-0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "books": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Mastering Laravel"
+                                                    },
+                                                    "isbn": {
+                                                        "type": "string",
+                                                        "example": "978-3-16-148410-0"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "Server error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/loan/user": {
+            "get": {
+                "tags": [
+                    "Loans"
+                ],
+                "summary": "Returns a list of users with their book loans.",
+                "operationId": "866e04baaae79e309aa276fbdf2ecc7f",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 5
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "surname": {
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "john@doe.com"
+                                                    },
+                                                    "books": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 10
+                                                                },
+                                                                "title": {
+                                                                    "type": "string",
+                                                                    "example": "Mastering Laravel"
+                                                                },
+                                                                "isbn": {
+                                                                    "type": "string",
+                                                                    "example": "978-3-16-148410-0"
+                                                                },
+                                                                "loans": {
+                                                                    "properties": {
+                                                                        "user_id": {
+                                                                            "type": "integer",
+                                                                            "example": 5
+                                                                        },
+                                                                        "book_id": {
+                                                                            "type": "integer",
+                                                                            "example": 10
+                                                                        },
+                                                                        "created_at": {
+                                                                            "description": "Loan date",
+                                                                            "type": "string",
+                                                                            "example": "2024-05-30T16:41:44.000000Z"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "Server error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/loan/book": {
+            "get": {
+                "tags": [
+                    "Loans"
+                ],
+                "summary": "Returns a list of books with users who asked a loan.",
+                "operationId": "898f781cc4cc9c7911542c5bcfdacd2a",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "books": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 5
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Mastering Laravel"
+                                                    },
+                                                    "isbn": {
+                                                        "type": "string",
+                                                        "example": "978-3-16-148410-0"
+                                                    },
+                                                    "users": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 10
+                                                                },
+                                                                "name": {
+                                                                    "type": "string",
+                                                                    "example": "John"
+                                                                },
+                                                                "surname": {
+                                                                    "type": "string",
+                                                                    "example": "Doe"
+                                                                },
+                                                                "email": {
+                                                                    "type": "string",
+                                                                    "example": "john@doe.com"
+                                                                },
+                                                                "loans": {
+                                                                    "properties": {
+                                                                        "user_id": {
+                                                                            "type": "integer",
+                                                                            "example": 10
+                                                                        },
+                                                                        "book_id": {
+                                                                            "type": "integer",
+                                                                            "example": 5
+                                                                        },
+                                                                        "created_at": {
+                                                                            "description": "Loan date",
+                                                                            "type": "string",
+                                                                            "example": "2024-05-30T16:41:44.000000Z"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "Server error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Returns a list of users. Search options available.",
+                "operationId": "dd505b4d34d3f3dcae7a3c8150ff1c0f",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "description": "Search fields",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john@doe.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "surname": {
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "john@doe.com"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "Server error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "book_properties": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Mastering Laravel"
+                    },
+                    "isbn": {
+                        "type": "string",
+                        "example": "978-3-16-148410-0"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
