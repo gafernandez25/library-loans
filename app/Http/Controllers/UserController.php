@@ -27,6 +27,8 @@ class UserController extends Controller
         );
 
 
-        return response()->json(User::collect($users));
+        return response()->json([
+            'users' => User::collect($users)
+        ]);
     }
 }

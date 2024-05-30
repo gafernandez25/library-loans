@@ -25,6 +25,6 @@ class BookController extends Controller
             )
         );
 
-        return response()->json(Book::collect($books));
+        return response()->json(['books' => Book::collect($books)]);
     }
 }
