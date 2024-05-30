@@ -11,33 +11,28 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property-read int $id
- * @property string $name
- * @property string $surname
- * @property string $email
+ * @property string $title
+ * @property string $isbn
  * @property \DateTime $created_at
  * @property \DateTime $updated_at
  * @property \DateTime $deleted_at
  */
-class User extends Model
+class Book extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'books';
+
     protected $fillable = [
-        'name',
-        'surname',
-        'email',
+        'title',
+        'isbn',
     ];
 
     protected $dates = ['deleted_at'];
 
-    public function books(): BelongsToMany
+    public function users(): BelongsToMany
     {
-        return $this->belongsToMany(Book::class, 'loans')->withTimestamps();
+        return $this->belongsToMany(User::class, 'loans')->withTimestamps();
     }
 }
