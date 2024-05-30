@@ -12,9 +12,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('loans', function (Blueprint $table) {
-            $table->foreignId('book_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+        Schema::create('book_user', function (Blueprint $table) {
+            $table->foreignId('book_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
 
             $table->primary(['book_id', 'user_id']);

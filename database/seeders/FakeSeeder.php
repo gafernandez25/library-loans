@@ -15,7 +15,13 @@ class FakeSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(50)->create();
+        $users = User::factory(50)->create();
         Book::factory(50)->create();
+
+        /** @var User $user */
+        foreach ($users as $user) {
+            $books = Book::query()->inRandomOrder()->limit(3)->get();
+            $user->books()->attach($books);
+        }
     }
 }
