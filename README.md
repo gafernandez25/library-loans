@@ -1,66 +1,100 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Set up the environment
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Containers
 
-## About Laravel
+1) After cloning the repository you can change container names and ports if you desire in docker-compose.yml file
+   located in directory root.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+``` sh
+    webserver:
+    container_name: library-loans-nginx
+    restart: on-failure
+    image: 'nginx:alpine'
+    ports:
+      - "8000:80"
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+> Take in consideration that command examples in this file are based in the parameter values from the original docker
+> compose file. If some of them are modified adjust the commands.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+There is no need to change anything else in Dockerfile and other docker config files.
 
-## Learning Laravel
+2) Once configured docker compose you can create the images and containers.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+``` sh
+docker-compose up -d
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Source code
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1) Once containers are created enter to php-fpm container as root user. It's recommended to execute every cli commands
+   from
+   inside the container.
 
-## Laravel Sponsors
+``` sh
+docker exec -ti library-loans-php-fpm bash
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2) Once inside the container you must execute the following commands to set up everything related to the code itself (
+   dependencies, permissiones, etc.).
 
-### Premium Partners
+``` sh
+make clone-post-actions
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+> If you didn't create databases (real and test) before you will be asked if you want them to be created, select yes.
 
-## Contributing
+> If console askes you if you are sure to execute some command in production select yes as response.
+> > These are actions that will be executed after cloning the repository when there's no user data saved in any place.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+At this point you can already see Swagger documentation (link below).
 
-## Code of Conduct
+3) Decrypt environment variables file with the following command.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+``` sh
+make decrypt-env KEY={{decription-key}}
+```
 
-## Security Vulnerabilities
+### decription-key:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+> **base64:0vidi+3Qum0fpkHpC5F9fpbrz/CJMXf4ftnf9Z7dDWg=**
 
-## License
+## Database
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Once env file is created after decryption migrations can be executed:
+
+``` sh
+make database-migrate KEY={{envfile-encryption-key}}
+```
+
+### envfile-encryption-key
+
+> 51TMszQEvpAlVxbe
+
+### Disclaimers:
+
+> > The DECRYPTION KEYS should be sent and store SECURELY.
+>
+> As this is a DEMO repository I take the liberty to expose it here.
+> 
+> In fact this is not even the best way, it's barely a good way. Ideally this should be consumed from secrets, e.g. AWS Secrets
+
+> Environment variables are set up intentionally for a development environment, i.e.
+> > APP_ENV=local
+>
+> > APP_DEBUG=true
+
+Everything set up, enjoy it!! :smiley:
+
+# API Documentation
+
+> http://localhost:8000/api/documentation
+>
+
+# Run tests
+
+You can execute all tests with the following command:
+
+``` sh
+make tests-run
+```
