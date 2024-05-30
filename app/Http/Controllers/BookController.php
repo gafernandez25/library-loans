@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\DataObjects\Book;
 use App\Http\Requests\BookGetRequest;
 use App\Repositories\BookRepositoryInterface;
+use App\ValueObjects\SearchBook;
 use Illuminate\Http\JsonResponse;
 
 class BookController extends Controller
@@ -17,9 +18,13 @@ class BookController extends Controller
 
     public function list(BookGetRequest $request): JsonResponse
     {
-        /** @var Book $books */
-        $books = Book::collect($this->bookRepository->getWithRequest($request));
+        $books = $this->bookRepository->search(
+            new SearchBook(
+                title: $request->title,
+                isbn: $request->isbn,
+            )
+        );
 
-        return response()->json($books);
+        return response()->json(Book::collect($books));
     }
 }

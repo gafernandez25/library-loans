@@ -1,6 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\LoanController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')->group(function () {
     Route::get('/book', [BookController::class, 'list']);
     Route::get('/user', [UserController::class, 'list']);
+    Route::get('/loan/user', [LoanController::class, 'listUsers']);
+    Route::get('/loan/book', [LoanController::class, 'listBooks']);
 });

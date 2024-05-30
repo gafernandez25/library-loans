@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Http\Requests\UserGetRequest;
 use App\Models\User;
+use App\ValueObjects\SearchUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -15,18 +15,18 @@ class EloquentUserRepository implements UserRepositoryInterface
     /**
      * @return Collection<int,User>
      */
-    public function getWithRequest(UserGetRequest $getRequest): Collection
+    public function search(SearchUser $searchUser): Collection
     {
         return User::query()
             ->select('users.id', 'users.name', 'users.surname', 'users.email')
-            ->when($getRequest->name, function (Builder $query) use ($getRequest) {
-                return $query->where('users.name', 'LIKE', '%' . $getRequest->name . '%');
+            ->when($searchUser->name, function (Builder $query) use ($searchUser) {
+                return $query->where('users.name', 'LIKE', '%' . $searchUser->name . '%');
             })
-            ->when($getRequest->surname, function (Builder $query) use ($getRequest) {
-                return $query->where('users.surname', 'LIKE', '%' . $getRequest->surname . '%');
+            ->when($searchUser->surname, function (Builder $query) use ($searchUser) {
+                return $query->where('users.surname', 'LIKE', '%' . $searchUser->surname . '%');
             })
-            ->when($getRequest->email, function (Builder $query) use ($getRequest) {
-                return $query->where('users.email', 'LIKE', '%' . $getRequest->email . '%');
+            ->when($searchUser->email, function (Builder $query) use ($searchUser) {
+                return $query->where('users.email', 'LIKE', '%' . $searchUser->email . '%');
             })
             ->get();
     }

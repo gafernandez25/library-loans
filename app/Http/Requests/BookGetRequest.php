@@ -9,8 +9,8 @@ use Spatie\LaravelData\Data;
 class BookGetRequest extends Data
 {
     public function __construct(
-        public ?string $title = null,
-        public ?string $isbn = null,
+        public ?string $title = '',
+        public ?string $isbn = '',
     ) {
     }
 }

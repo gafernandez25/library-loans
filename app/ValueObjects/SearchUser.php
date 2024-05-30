@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\ValueObjects;
 
-use Spatie\LaravelData\Data;
-
-class UserGetRequest extends Data
+readonly class SearchUser
 {
     public function __construct(
         public ?string $name = null,
