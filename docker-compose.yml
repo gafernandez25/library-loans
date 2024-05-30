@@ -34,10 +34,20 @@ services:
             MYSQL_USER: user
             MYSQL_PASSWORD: 1234
         ports:
-            - '33066:3306'
+            - '33061:3306'
+    test-db:
+        container_name: library-loans-test-db
+        image: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: 789
+            MYSQL_USER: usertest
+            MYSQL_PASSWORD: 1234
+        ports:
+            - '33062:3306'
     phpmyadmin:
         depends_on:
             - db
+            - test-db
         container_name: library-loans-phpmyadmin
         image: phpmyadmin/phpmyadmin
         ports:
