@@ -3,8 +3,6 @@ clone-post-actions: install-dependencies dump-autoload chown-storage-apache clea
 
 pull-post-actions: install-dependencies dump-autoload database-migrate
 
-decrypt-env-post-actions: database-migrate seed-database-fake-data
-
 install-dependencies:
 	composer install
 

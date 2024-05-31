@@ -42,7 +42,7 @@ docker exec -ti library-loans-php-fpm bash
 make clone-post-actions
 ```
 
-> If you didn't create databases (real and test) before you will be asked if you want them to be created, select yes.
+> If you didn't create test database before you will be asked if you want it to be created, select yes.
 
 > If console askes you if you are sure to execute some command in production select yes as response.
 > > These are actions that will be executed after cloning the repository when there's no user data saved in any place.
@@ -64,7 +64,13 @@ make decrypt-env KEY={{decription-key}}
 Once env file is created after decryption migrations can be executed:
 
 ``` sh
-make database-migrate KEY={{envfile-encryption-key}}
+make database-migrate
+```
+
+If you want to fill database with fake data:
+
+``` sh
+make seed-database-fake-data
 ```
 
 ### envfile-encryption-key
