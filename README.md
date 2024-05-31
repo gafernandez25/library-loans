@@ -93,6 +93,7 @@ Everything set up, enjoy it!! :smiley:
 
 > http://localhost:8000/api/documentation
 >
+> Note: json request body doesn't work in swagger, it does work with Postman
 
 # Run tests
 
