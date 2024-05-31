@@ -1,4 +1,4 @@
-# Set up the environment
+# Set up the environments
 
 ## Containers
 
