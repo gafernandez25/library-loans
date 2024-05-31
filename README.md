@@ -76,8 +76,9 @@ make database-migrate KEY={{envfile-encryption-key}}
 > > The DECRYPTION KEYS should be sent and store SECURELY.
 >
 > As this is a DEMO repository I take the liberty to expose it here.
-> 
-> In fact this is not even the best way, it's barely a good way. Ideally this should be consumed from secrets, e.g. AWS Secrets
+
+> Same applies for some sensitive values inside .env file (DB password, api-key, etc.) that can be read once decrypted,
+> they should be store in secrets places ideally outside this environment, e.g. AWS secrets.
 
 > Environment variables are set up intentionally for a development environment, i.e.
 > > APP_ENV=local

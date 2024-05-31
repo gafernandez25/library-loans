@@ -11,7 +11,6 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
-        "mrgswift/laravel-encryptenv": "^1.0",
         "spatie/laravel-data": "^4.6"
     },
     "require-dev": {

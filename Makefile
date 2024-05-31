@@ -3,6 +3,8 @@ clone-post-actions: install-dependencies dump-autoload chown-storage-apache clea
 
 pull-post-actions: install-dependencies dump-autoload database-migrate
 
+decrypt-env-post-actions: database-migrate seed-database-fake-data
+
 install-dependencies:
 	composer install
 
@@ -28,7 +30,10 @@ api-doc-regenerate:
 	php artisan l5-swagger:generate
 
 database-migrate:
-	php artisan encryptenv:console 'php artisan migrate' $(KEY)
+	php artisan migrate
 
 test-database-migrate:
 	php artisan migrate --env=testing
+
+seed-database-fake-data:
+	php artisan db:seed --class=FakeSeeder

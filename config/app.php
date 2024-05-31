@@ -122,7 +122,7 @@ return [
     |
     */
 
-    'key' => secEnv('APP_KEY'),
+    'key' => env('APP_KEY'),
 
     'cipher' => 'AES-256-CBC',
 
@@ -159,7 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
-        mrgswift\EncryptEnv\Provider\EncryptEnvServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
