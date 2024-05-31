@@ -73,10 +73,6 @@ If you want to fill database with fake data:
 make seed-database-fake-data
 ```
 
-### envfile-encryption-key
-
-> 51TMszQEvpAlVxbe
-
 ### Disclaimers:
 
 > > The DECRYPTION KEYS should be sent and store SECURELY.
